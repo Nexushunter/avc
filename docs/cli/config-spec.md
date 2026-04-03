@@ -156,3 +156,4 @@ Behavior by value:
 - v1 assumes sidecar storage under `.avc/`.
 - Future versions may add storage backend config while preserving `securityLevel` semantics.
 - CLI commands should surface actionable errors when config validation fails.
+

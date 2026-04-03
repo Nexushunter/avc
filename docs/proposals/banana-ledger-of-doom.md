@@ -16,7 +16,7 @@ Treat version control as an event graph first, with commits as one output artifa
 
 ### Q3) How does this handle multiple providers?
 
-Use a provider adapter that maps raw provider events into canonical event types (`ModelRequest`, `ToolInvocation`, `ReasoningCheckpoint`, `Failure`). Keep provider-specific fields in a namespaced payload (`provider.raw.*`) to avoid schema lock-in.
+Use a provider adapter that maps raw provider events into canonical event types (`ModelRequest`, `ToolInvocation`, `ReasoningCheckpoint`, `Failure`). Keep provider-specific fields in a namespaced payload (`provider.raw.`*) to avoid schema lock-in.
 
 ### Q4) What are the strongest benefits?
 
@@ -96,6 +96,8 @@ flowchart LR
   approvalGranted --> mergeCompleted
   mergeCompleted --> deployObserved
 ```
+
+
 
 ### Q11) How should query/read models be designed?
 
@@ -185,6 +187,8 @@ flowchart TD
   indexStore --> reviewerTimeline
 ```
 
+
+
 ### Q15) What conceptual models describe this system best?
 
 Use these three conceptual models together:
@@ -219,6 +223,8 @@ flowchart LR
   policyPlane --> gitProjection
   eventPlane --> gitProjection
 ```
+
+
 
 ### Q16) How should we choose between conceptual models in design discussions?
 
@@ -293,3 +299,4 @@ Decision: the long-term goal is a CLI that can replace Git workflows.
 Implication:
 
 - Treat Git as a compatibility layer during transition, not the ultimate system boundary.
+
