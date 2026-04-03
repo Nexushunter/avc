@@ -43,6 +43,8 @@ flowchart LR
   rollbackPath --> auditTrail
 ```
 
+
+
 ## Governance and Safety Defaults
 
 - Enforce mandatory provenance fields on every change package (agent, provider, prompt hash, tool calls, test evidence).
@@ -84,3 +86,4 @@ flowchart LR
 - Canonical event schema draft.
 - Governance policy matrix by risk tier.
 - Pilot rollout plan for one repository and one team.
+
