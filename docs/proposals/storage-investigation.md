@@ -131,11 +131,49 @@ Investigation is complete when:
 - Continue using commits/branches/PRs as current transport and review primitives.
 - Ensure all ledger links reference commit sha and change-package id.
 
+Actionable epic for Phase 1 is maintained in:
+
+- `docs/epics/side-foundation.md`
+
 ### Phase 2: Ledger-First CLI (transition)
 
 - Introduce CLI commands as primary user interface (`avc plan`, `avc run`, `avc approve`, `avc merge`).
 - Generate Git artifacts as compatibility outputs, not as the primary source-of-truth.
 - Maintain bidirectional mapping between ledger ids and Git ids.
+
+#### Phase 2 Objective
+
+Transition from Git-first operation to AVC-first operation where the CLI is primary, the ledger is authoritative, and Git is derived compatibility output.
+
+#### Phase 2 Workstreams
+
+1. Command surface and orchestration for ledger-first defaults.
+2. Git compatibility adapter layer for branch/commit/PR outputs.
+3. Ledger-Git id mapping and sync integrity.
+4. Review and CI integration flow for mixed adoption teams.
+5. Rollout guardrails and adoption measurement.
+
+#### Phase 2 Milestones
+
+- **M1: CLI-first command contract stable**
+- **M2: Git compatibility adapter operational**
+- **M3: Mapping reliability proven**
+- **M4: Review and CI flow integrated**
+- **M5: Transition readiness decision**
+
+#### Phase 2 Exit Criteria
+
+Phase 2 is complete when:
+
+- AVC commands can be used as the primary daily workflow interface;
+- Git artifacts are deterministic compatibility outputs from ledger state;
+- bidirectional mapping and drift checks are reliable for pilot packages;
+- review/CI workflows remain usable for PR-centric teams;
+- rollout metrics support a defensible Phase 3 recommendation.
+
+Actionable epic for Phase 2 is maintained in:
+
+- `docs/epics/ledger-first-cli/ledger-first-cli.md`
 
 ### Phase 3: Git-Optional Runtime (replacement target)
 
