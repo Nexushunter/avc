@@ -67,7 +67,7 @@ Implement end-to-end behavior for `avc plan`, `avc run`, `avc approve`, and `avc
 
 - `1-schema-storage-foundation.md`
 - `docs/cli/command-spec.md`
-- repo-level `.avc/conf.json`
+- repo-level `.avc/config.json`
 
 ## Risks and Mitigations
 

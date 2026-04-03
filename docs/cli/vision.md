@@ -124,7 +124,7 @@ flowchart LR
 ## Policy and Safety Baseline
 
 - Immutable lifecycle events.
-- Event creation is governed by `.avc/conf.json` (field: `securityLevel`) to determine whether payloads are written as full, redacted, or summary-only.
+- Event creation is governed by `.avc/config.json` (field: `securityLevel`) to determine whether payloads are written as full, redacted, or summary-only.
 - Security-level evaluation happens before event persistence (fail-closed if config is missing/invalid) to prevent accidental sensitive-content bleed.
 - Policy gates before approval and merge.
 - Rollback-ready metadata required for high-risk scopes.

@@ -2,11 +2,11 @@
 
 ## Purpose
 
-Define the configuration contract for `.avc/conf.json` so CLI behavior, policy enforcement, and documentation remain consistent.
+Define the configuration contract for `.avc/config.json` so CLI behavior, policy enforcement, and documentation remain consistent.
 
 ## File Location
 
-- Required path: `.avc/conf.json`
+- Required path: `.avc/config.json`
 - Read timing: before any event persistence
 - Failure mode: fail closed if missing or invalid
 
@@ -101,7 +101,7 @@ Behavior by value:
 
 ## Validation Rules
 
-- `.avc/conf.json` must exist and be valid JSON.
+- `.avc/config.json` must exist and be valid JSON.
 - `schemaVersion` must be recognized by the CLI.
 - `securityLevel` must be in `eventPersistence.allowedSecurityLevels`.
 - If `eventPersistence.failClosed` is `true`, any violation returns a config/security error and no event is written.

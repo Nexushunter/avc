@@ -32,7 +32,7 @@ It targets the Git-compatible pilot while preserving a ledger-first model.
 
 ## Security-Level Behavior
 
-Before writing any event, the CLI reads `.avc/conf.json.securityLevel`.
+Before writing any event, the CLI reads `.avc/config.json.securityLevel`.
 
 Allowed values:
 
@@ -42,7 +42,7 @@ Allowed values:
 
 Failure mode:
 
-- if `.avc/conf.json` is missing, unreadable, or has invalid `securityLevel`, command exits with a fail-closed security config error.
+- if `.avc/config.json` is missing, unreadable, or has invalid `securityLevel`, command exits with a fail-closed security config error.
 
 ## Command: `avc plan`
 
@@ -227,7 +227,7 @@ Commit: 24cef9b
 | `0`  | Success                                                        |
 | `1`  | Generic runtime failure                                        |
 | `2`  | Invalid command usage or argument validation failure           |
-| `3`  | Config error (`.avc/conf.json` missing/invalid)                |
+| `3`  | Config error (`.avc/config.json` missing/invalid)              |
 | `4`  | Security-level enforcement failure (fail-closed write blocked) |
 | `5`  | Package not found                                              |
 | `6`  | Lifecycle precondition not met (invalid state transition)      |

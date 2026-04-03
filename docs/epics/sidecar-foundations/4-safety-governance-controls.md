@@ -6,7 +6,7 @@ Enforce non-negotiable safety guarantees for sidecar-based event persistence, ap
 
 ## Scope
 
-- fail-closed behavior from `.avc/conf.json`
+- fail-closed behavior from `.avc/config.json`
 - immutable events and supersedes semantics
 - policy gate enforcement before approve/merge
 - rollback metadata requirements for high-risk changes

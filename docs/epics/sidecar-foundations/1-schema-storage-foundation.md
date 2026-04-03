@@ -6,14 +6,14 @@ Define stable, versioned sidecar data contracts and config validation so all AVC
 
 ## Scope
 
-- `.avc/conf.json` contract and validation behavior
+- `.avc/config.json` contract and validation behavior
 - package-level sidecar schemas
 - commit index schema
 - schema migration/versioning policy
 
 ## Deliverables
 
-- JSON schema document for `.avc/conf.json` (aligned to `docs/cli/config-spec.md`)
+- JSON schema document for `.avc/config.json` (aligned to `docs/cli/config-spec.md`)
 - schema definitions for:
   - `.avc/packages/<id>/intent.json`
   - `.avc/packages/<id>/events.ndjson` event line contract
@@ -31,7 +31,7 @@ Define stable, versioned sidecar data contracts and config validation so all AVC
   - policy gate toggles
 - Implement config-loading sequence:
   1. discover repo root;
-  2. load `.avc/conf.json`;
+  2. load `.avc/config.json`;
   3. validate and normalize;
   4. block writes on validation failure.
 - Define explicit error mapping to CLI exit codes.
@@ -87,7 +87,7 @@ Define stable, versioned sidecar data contracts and config validation so all AVC
 
 Tasks:
 
-- Implement config discovery and parse path for `.avc/conf.json`.
+- Implement config discovery and parse path for `.avc/config.json`.
 - Validate required fields and enums (`securityLevel`, policy toggles, fail-closed).
 - Return config/security-specific exit codes on failure.
 
