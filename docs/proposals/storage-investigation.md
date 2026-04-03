@@ -4,6 +4,12 @@
 
 Decide where Banana Ledger events should live for a single-repo pilot while preserving reviewer traceability, immutable lineage, and future scale.
 
+## Current Direction
+
+Decision: choose **repo sidecar metadata** as the pilot architecture.
+
+Long-term product goal: evolve toward a CLI that can **replace Git** for day-to-day developer workflows, with Git compatibility as a transitional mode.
+
 ## Decision Question
 
 Should lifecycle events be stored as:
@@ -72,6 +78,14 @@ Cons:
 - Highest design complexity if adopted too early.
 - Needs strict contract between summary and source-of-truth event records.
 
+## Decision Summary
+
+- Selected option for pilot: **Option A (Repo Sidecar Metadata)**.
+- Why now: best developer ergonomics, low operational overhead, and fastest path to validating reviewer-traceability UX.
+- Not selected for pilot:
+  - Option B adds infrastructure cost before we validate core workflows.
+  - Option C remains a likely migration pattern after pilot evidence.
+
 ## Evaluation Criteria
 
 Score each option from 1 (poor) to 5 (strong):
@@ -84,16 +98,16 @@ Score each option from 1 (poor) to 5 (strong):
 - Operational complexity (oncall, backup/restore, migrations).
 - Local developer ergonomics (branch workflows, debuggability).
 
-## Method
+## Method (Updated for Selected Direction)
 
 1. Define representative workloads:
   - low volume: 1-2 agent runs per task;
   - medium volume: concurrent CI + agent activity;
   - high volume: multiple agents and retries in parallel.
-2. Implement thin prototypes for Option A and Option B.
-3. Run the same synthetic event traces through both prototypes.
-4. Measure query and write performance, plus operational friction notes.
-5. Draft a recommendation and migration path (including hybrid timing).
+2. Implement Option A with a strict sidecar schema (under `.avc/`).
+3. Validate day-one reviewer queries on real branch/PR flows.
+4. Measure file growth, merge friction, and query responsiveness.
+5. Define explicit migration triggers to external/hybrid storage.
 
 ## Day-One Query Set (Must Pass)
 
@@ -105,11 +119,41 @@ Score each option from 1 (poor) to 5 (strong):
 
 Investigation is complete when:
 
-- a preferred option is selected with evidence;
+- pilot architecture is selected and documented;
 - known tradeoffs are documented and accepted;
 - a phased implementation path is defined for the single-repo pilot.
 
-## Recommendation Template
+## Git-Replacement Migration Path
+
+### Phase 1: Git-Compatible Sidecar (now)
+
+- Store lifecycle events in repo sidecars.
+- Continue using commits/branches/PRs as current transport and review primitives.
+- Ensure all ledger links reference commit sha and change-package id.
+
+### Phase 2: Ledger-First CLI (transition)
+
+- Introduce CLI commands as primary user interface (`avc plan`, `avc run`, `avc approve`, `avc merge`).
+- Generate Git artifacts as compatibility outputs, not as the primary source-of-truth.
+- Maintain bidirectional mapping between ledger ids and Git ids.
+
+### Phase 3: Git-Optional Runtime (replacement target)
+
+- Make CLI-native operations first-class without requiring Git semantics.
+- Keep Git export/import adapters for interoperability.
+- Treat Git as one backend format among several, rather than the central model.
+
+## Re-Evaluation Triggers
+
+Move from repo sidecar to hybrid/external when one or more conditions are met:
+
+- sidecar data growth causes noticeable repo performance issues;
+- merge conflicts in sidecar files become frequent;
+- reviewer query latency exceeds agreed `P95` targets;
+- multi-repo coordination becomes a primary use case;
+- security/retention policies require stronger central enforcement.
+
+## Recommendation Template (For Future Revisit)
 
 Use this section after investigation:
 

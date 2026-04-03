@@ -261,19 +261,18 @@ Starting policy:
 
 #### D3) Event storage architecture
 
-Status: requires investigation.
+Decision: choose repo sidecar metadata for the pilot.
 
-Investigation plan:
+Why:
 
-1. Compare two options:
-   - repo sidecar metadata;
-   - external event store with commit/PR references.
-2. Evaluate by:
-   - query latency for reviewer timeline;
-   - write throughput during heavy agent runs;
-   - operational complexity and backup strategy;
-   - security and retention controls.
-3. Produce a recommendation with a migration path (including hybrid option).
+- Fastest path to validate reviewer traceability UX.
+- Lowest operational overhead for a single-repo start.
+- Keeps lineage transparent in branch/PR workflows while the model matures.
+
+Follow-up:
+
+- Track migration triggers for moving to hybrid or external event storage.
+- Align sidecar schema with long-term CLI-first design.
 
 #### D4) Day-one query priority
 
@@ -286,3 +285,11 @@ Day-one required query templates:
 - "Which validations and approvals are still missing?"
 
 Incident replay remains phase-two once reviewer flow is stable.
+
+#### D5) End-state product direction
+
+Decision: the long-term goal is a CLI that can replace Git workflows.
+
+Implication:
+
+- Treat Git as a compatibility layer during transition, not the ultimate system boundary.
