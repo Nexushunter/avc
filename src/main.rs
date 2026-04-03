@@ -3,8 +3,8 @@ mod config;
 mod events;
 
 use clap::Parser;
-use cli::{execute_command, Cli};
-use config::{ensure_and_load_config, RuntimeMode};
+use cli::{Cli, execute_command};
+use config::{RuntimeMode, ensure_and_load_config};
 use std::path::PathBuf;
 use std::process;
 
