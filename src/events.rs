@@ -139,8 +139,8 @@ fn validate_new_events(existing: &[EventEnvelope], new_events: &[EventEnvelope])
             ));
         }
 
-        if let Some(superseded) = &event.references.supersedes_event_id {
-            if !known_ids.contains(superseded.as_str()) {
+        if let Some(superseded) = &event.references.supersedes_event_id
+            && !known_ids.contains(superseded.as_str()) {
                 return Err(io::Error::new(
                     io::ErrorKind::InvalidInput,
                     format!(
@@ -149,7 +149,6 @@ fn validate_new_events(existing: &[EventEnvelope], new_events: &[EventEnvelope])
                     ),
                 ));
             }
-        }
 
         known_ids.insert(event.event_id.as_str());
     }
