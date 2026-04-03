@@ -1,5 +1,6 @@
 mod cli;
 mod config;
+mod events;
 
 use clap::Parser;
 use cli::{execute_command, Cli};
