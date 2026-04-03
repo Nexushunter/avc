@@ -12,7 +12,7 @@ Make AVC CLI the primary workflow interface while keeping Git as a compatibility
 
 ## Workstream Breakdown
 
-Detailed bodies of work now live in `docs/epics/ledger-first-cli/`:
+Detailed workstreams live in `docs/epics/ledger-first-cli/`:
 
 0. `docs/epics/ledger-first-cli/0-ticket-order-of-operations.md`
 1. `docs/epics/ledger-first-cli/1-cli-command-surface-and-orchestration.md`
@@ -28,6 +28,49 @@ Each file contains:
 - acceptance criteria;
 - dependencies;
 - risks and mitigations.
+
+## Workstreams and Steps
+
+### 1) CLI Command Surface and Orchestration
+
+Steps:
+- define runtime mode defaults and toggles;
+- centralize command runtime context and error mapping;
+- enforce stable text/json output envelopes.
+
+### 2) Git Compatibility Adapter Layer
+
+Steps:
+- emit deterministic branch/commit artifacts from ledger state;
+- emit PR compatibility metadata for review handoff;
+- validate generated artifacts with reconciliation checks.
+
+### 3) Ledger-Git ID Mapping and Sync
+
+Steps:
+- define mapping schema and update semantics;
+- implement bidirectional lookup interfaces;
+- detect and repair mapping drift.
+
+### 4) Review and CI Integration Flow
+
+Steps:
+- surface gate and approval visibility in CLI and compatibility outputs;
+- ingest and normalize check status into merge-readiness;
+- validate end-to-end mixed CLI/PR review flows.
+
+### 5) Rollout Guardrails and Adoption
+
+Steps:
+- implement feature flags and fallback controls;
+- capture adoption and reliability metrics;
+- produce Phase 2 readiness recommendation.
+
+## Ticket Breakdown
+
+Ticket docs are step-derived and do not use workstreams as tickets.
+
+- `docs/epics/ledger-first-cli/tickets/index.md`
 
 ## Milestones
 
