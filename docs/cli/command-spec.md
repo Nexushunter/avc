@@ -17,6 +17,21 @@ It targets the Git-compatible pilot while preserving a ledger-first model.
 - Optional argument notation: `[value]`
 - Repeated flags: may be passed multiple times
 - Output defaults to human-readable text unless `--output json` is provided
+- AVC references are agent-agnostic: no provider/vendor is treated as implicit default.
+
+## Default Resolution Policy
+
+When optional flags are omitted, defaults resolve in this order:
+
+1. explicit CLI flag value;
+2. repo config value from `.avc/config.json` (if defined for that field);
+3. built-in command default from this spec.
+
+If no default exists in any layer, behavior is:
+
+- scalar fields: `null`/unset;
+- repeatable fields: empty list;
+- booleans: `false`.
 
 ## Global Flags
 
@@ -68,6 +83,15 @@ avc plan --title <title> [flags]
 | `--idempotency-key <key>` | string                       | no       | De-duplicate repeated invocations            |
 
 
+### Default behavior when omitted
+
+- `--goal`: defaults to the same value as `--title`.
+- `--constraint`: defaults to empty list.
+- `--acceptance`: defaults to empty list.
+- `--risk`: defaults to `medium`.
+- `--branch`: defaults to `cursor/<slug-of-title>`.
+- `--idempotency-key`: defaults to auto-generated deterministic key from intent payload.
+
 ### Example
 
 ```shell
@@ -113,14 +137,25 @@ avc run --package <id> [flags]
 | `--dry-run`         | boolean             | no       | Simulate without file modifications   |
 
 
+### Default behavior when omitted
+
+- `--agent`: defaults to configured runtime agent profile for the current repo/environment.
+- `--provider`: defaults to configured provider adapter for the current repo/environment.
+- `--model`: defaults to the selected provider adapter's configured default model.
+- `--parallel`: defaults to `1`.
+- `--max-steps`: defaults to `50`.
+- `--tool`: defaults to policy-allowed tool set from config; if none defined, no additional tool restriction beyond built-ins.
+- `--validate`: defaults to `false`.
+- `--dry-run`: defaults to `false`.
+
 ### Example
 
 ```shell
 avc run \
   --package cp_123 \
-  --agent coder \
-  --provider openai \
-  --model gpt-5 \
+  --agent implementation-agent \
+  --provider provider-adapter-a \
+  --model default-capability-model \
   --validate
 ```
 
@@ -156,6 +191,14 @@ avc approve --package <id> --reviewer <id> [flags]
 | `--defer`                | boolean             | no       | Record deferred decision instead of approval |
 | `--note <text>`          | string              | no       | Freeform reviewer rationale                  |
 
+
+### Default behavior when omitted
+
+- `--scope`: defaults to full package scope.
+- `--condition`: defaults to empty list.
+- `--require-check`: defaults to policy-required checks for package risk tier.
+- `--defer`: defaults to `false`.
+- `--note`: defaults to empty string.
 
 ### Example
 
@@ -199,6 +242,14 @@ avc merge --package <id> [flags]
 | `--attach-runtime-hooks` | boolean                      | no       | Register runtime observation hooks   |
 | `--dry-run`              | boolean                      | no       | Validate merge preconditions only    |
 
+
+### Default behavior when omitted
+
+- `--strategy`: defaults to `squash`.
+- `--target`: defaults to `main`.
+- `--release`: defaults to unset (auto-linked if external release id is provided by pipeline).
+- `--attach-runtime-hooks`: defaults to `false`.
+- `--dry-run`: defaults to `false`.
 
 ### Example
 

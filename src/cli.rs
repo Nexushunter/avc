@@ -1,7 +1,7 @@
 use clap::{Parser, Subcommand};
 
 #[derive(Debug, Parser)]
-#[command(name = "avc", version, about = " CLI")]
+#[command(name = "avc", version, about = "Agentic version control CLI")]
 pub struct Cli {
     /// Repository root path
     #[arg(long, default_value = ".")]

@@ -16,6 +16,7 @@ Define a CLI-first workflow where AVC becomes the primary interface for planning
 - Explicit lifecycle checkpoints with immutable event records.
 - Reviewer traceability as a first-class experience.
 - Safe defaults for approvals, policy gates, and rollback readiness.
+- Agent/provider agnostic semantics in all AVC command and metadata references.
 
 ## First Command Model
 
@@ -92,7 +93,7 @@ During transition, each AVC command maps to familiar Git operations while preser
 
 ```shell
 avc plan --title "Add provider-agnostic adapter contract"
-avc run --package cp_123 --agent coder --provider openai
+avc run --package cp_123 --agent implementation-agent --provider provider-adapter-a
 avc approve --package cp_123 --reviewer alice --scope "auth/**"
 avc merge --package cp_123
 ```

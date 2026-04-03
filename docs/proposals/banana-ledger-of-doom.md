@@ -46,7 +46,7 @@ Every event should contain:
 - `change_package_id`: shared id for a single intent-to-merge flow.
 - `event_type`: canonical type (`IntentDeclared`, `ToolInvocation`, `ValidationResult`, etc.).
 - `actor_type`: `human`, `agent`, `system`.
-- `actor_id`: concrete actor id (`agent.coder.v2`, reviewer handle, CI service account).
+- `actor_id`: concrete actor id (`agent.runtime.implementation`, reviewer handle, CI service account).
 - `occurred_at`: event timestamp in UTC.
 - `references`: pointers to commit sha, PR id, artifact ids, deployment id.
 - `payload`: typed event body.
