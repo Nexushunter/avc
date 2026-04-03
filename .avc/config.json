@@ -18,5 +18,9 @@
     "requireRollbackMetadataForRiskTiers": [
       "high"
     ]
+  },
+  "runtime": {
+    "defaultMode": "ledger-first",
+    "allowFallbackMode": false
   }
 }

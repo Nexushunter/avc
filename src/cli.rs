@@ -1,4 +1,5 @@
-use clap::{Parser, Subcommand};
+use crate::config::RuntimeMode;
+use clap::{Parser, Subcommand, ValueEnum};
 
 #[derive(Debug, Parser)]
 #[command(name = "avc", version, about = "Agentic version control CLI")]
@@ -12,8 +13,34 @@ pub struct Cli {
     /// Include verbose debug details
     #[arg(long, default_value_t = false)]
     pub verbose: bool,
+    /// Force runtime mode for this invocation
+    #[arg(long, value_enum)]
+    pub mode: Option<CliMode>,
+    /// Explicit toggle for git-compatible mode
+    #[arg(long, default_value_t = false)]
+    pub git_compatible: bool,
+    /// Explicit toggle for fallback behavior
+    #[arg(long, default_value_t = false)]
+    pub fallback_mode: bool,
     #[command(subcommand)]
     pub command: Commands,
+}
+
+#[derive(Debug, Clone, Copy, ValueEnum)]
+pub enum CliMode {
+    #[value(name = "ledger-first")]
+    LedgerFirst,
+    #[value(name = "git-compatible")]
+    GitCompatible,
+}
+
+impl From<CliMode> for RuntimeMode {
+    fn from(value: CliMode) -> Self {
+        match value {
+            CliMode::LedgerFirst => RuntimeMode::LedgerFirst,
+            CliMode::GitCompatible => RuntimeMode::GitCompatible,
+        }
+    }
 }
 
 #[derive(Debug, Subcommand)]
@@ -58,7 +85,9 @@ pub enum Commands {
     },
 }
 
-pub fn execute_command(command: Commands) {
+pub fn execute_command(command: Commands, mode: RuntimeMode, fallback_mode: bool) {
+    println!("runtime: mode={mode} fallback_mode={fallback_mode}");
+
     match command {
         Commands::Plan { title, goal } => {
             println!("plan: title={title} goal={goal:?}");

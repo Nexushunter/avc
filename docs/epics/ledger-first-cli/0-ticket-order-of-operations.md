@@ -47,6 +47,8 @@ flowchart TD
   wave0 --> wave1 --> wave2 --> wave3 --> wave4 --> wave5 --> wave6 --> wave7 --> wave8 --> wave9
 ```
 
+
+
 ## Dependency Graph
 
 ```mermaid
@@ -97,6 +99,8 @@ flowchart LR
   lf013 --> lf014 --> lf015
 ```
 
+
+
 ## Ticket Legend
 
 - `LF-001` Ledger-first command defaults and mode toggles
@@ -114,3 +118,4 @@ flowchart LR
 - `LF-013` Feature flags, rollout controls, and fallback mode
 - `LF-014` Adoption and reliability metrics for transition
 - `LF-015` Phase 2 readiness report and Phase 3 entry recommendation
+

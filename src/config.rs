@@ -11,6 +11,8 @@ pub struct AvcConfig {
     event_persistence: EventPersistenceConfig,
     lifecycle: LifecycleConfig,
     policy: PolicyConfig,
+    #[serde(default)]
+    runtime: RuntimeConfig,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -50,6 +52,29 @@ enum RiskTier {
     High,
 }
 
+#[derive(Debug, Clone, Copy, Serialize, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum RuntimeMode {
+    LedgerFirst,
+    GitCompatible,
+}
+
+impl std::fmt::Display for RuntimeMode {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Self::LedgerFirst => write!(f, "ledger-first"),
+            Self::GitCompatible => write!(f, "git-compatible"),
+        }
+    }
+}
+
+#[derive(Debug, Clone, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase")]
+struct RuntimeConfig {
+    default_mode: RuntimeMode,
+    allow_fallback_mode: bool,
+}
+
 impl Default for AvcConfig {
     fn default() -> Self {
         Self {
@@ -58,6 +83,7 @@ impl Default for AvcConfig {
             event_persistence: EventPersistenceConfig::default(),
             lifecycle: LifecycleConfig::default(),
             policy: PolicyConfig::default(),
+            runtime: RuntimeConfig::default(),
         }
     }
 }
@@ -90,6 +116,25 @@ impl Default for PolicyConfig {
             require_gates_before_merge: true,
             require_rollback_metadata_for_risk_tiers: vec![RiskTier::High],
         }
+    }
+}
+
+impl Default for RuntimeConfig {
+    fn default() -> Self {
+        Self {
+            default_mode: RuntimeMode::LedgerFirst,
+            allow_fallback_mode: false,
+        }
+    }
+}
+
+impl AvcConfig {
+    pub fn default_runtime_mode(&self) -> RuntimeMode {
+        self.runtime.default_mode
+    }
+
+    pub fn allow_fallback_mode(&self) -> bool {
+        self.runtime.allow_fallback_mode
     }
 }
 

@@ -3,7 +3,7 @@ mod config;
 
 use clap::Parser;
 use cli::{execute_command, Cli};
-use config::ensure_and_load_config;
+use config::{ensure_and_load_config, RuntimeMode};
 use std::path::PathBuf;
 use std::process;
 
@@ -18,9 +18,28 @@ fn run() -> Result<(), MainError> {
     let cli = Cli::parse();
     let repo_root = PathBuf::from(&cli.repo);
 
-    ensure_and_load_config(&repo_root)?;
-    execute_command(cli.command);
+    let config = ensure_and_load_config(&repo_root)?;
+    let mode = resolve_runtime_mode(&cli, config.default_runtime_mode());
+    let fallback_mode = resolve_fallback_mode(&cli, config.allow_fallback_mode());
+
+    execute_command(cli.command, mode, fallback_mode);
     Ok(())
+}
+
+fn resolve_runtime_mode(cli: &Cli, config_default_mode: RuntimeMode) -> RuntimeMode {
+    if cli.git_compatible {
+        return RuntimeMode::GitCompatible;
+    }
+
+    if let Some(mode) = cli.mode {
+        return mode.into();
+    }
+
+    config_default_mode
+}
+
+fn resolve_fallback_mode(cli: &Cli, config_allow_fallback_mode: bool) -> bool {
+    cli.fallback_mode || config_allow_fallback_mode
 }
 
 #[derive(Debug)]
