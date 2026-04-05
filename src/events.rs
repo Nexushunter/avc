@@ -109,7 +109,10 @@ fn validate_existing_event_stream(existing: &[EventEnvelope]) -> io::Result<()> 
         if !seen_ids.insert(event.event_id.as_str()) {
             return Err(io::Error::new(
                 io::ErrorKind::InvalidData,
-                format!("existing event stream has duplicate event id '{}'", event.event_id),
+                format!(
+                    "existing event stream has duplicate event id '{}'",
+                    event.event_id
+                ),
             ));
         }
     }
@@ -127,7 +130,8 @@ fn validate_new_events(existing: &[EventEnvelope], new_events: &[EventEnvelope])
                 "event id cannot be empty",
             ));
         }
-        if !seen_new_ids.insert(event.event_id.as_str()) || known_ids.contains(event.event_id.as_str())
+        if !seen_new_ids.insert(event.event_id.as_str())
+            || known_ids.contains(event.event_id.as_str())
         {
             return Err(io::Error::new(
                 io::ErrorKind::InvalidInput,
@@ -135,16 +139,16 @@ fn validate_new_events(existing: &[EventEnvelope], new_events: &[EventEnvelope])
             ));
         }
 
-        if let Some(superseded) = &event.references.supersedes_event_id {
-            if !known_ids.contains(superseded.as_str()) {
-                return Err(io::Error::new(
-                    io::ErrorKind::InvalidInput,
-                    format!(
-                        "supersedes reference '{}' not found for event '{}'",
-                        superseded, event.event_id
-                    ),
-                ));
-            }
+        if let Some(superseded) = &event.references.supersedes_event_id
+            && !known_ids.contains(superseded.as_str())
+        {
+            return Err(io::Error::new(
+                io::ErrorKind::InvalidInput,
+                format!(
+                    "supersedes reference '{}' not found for event '{}'",
+                    superseded, event.event_id
+                ),
+            ));
         }
 
         known_ids.insert(event.event_id.as_str());
@@ -155,7 +159,7 @@ fn validate_new_events(existing: &[EventEnvelope], new_events: &[EventEnvelope])
 
 #[cfg(test)]
 mod tests {
-    use super::{append_events, EventEnvelope, EventReferences};
+    use super::{EventEnvelope, EventReferences, append_events};
     use serde_json::json;
     use std::fs;
 

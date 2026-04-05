@@ -108,7 +108,9 @@ pub fn execute_command(command: Commands, mode: RuntimeMode, fallback_mode: bool
             scope,
             defer,
         } => {
-            println!("approve: package={package} reviewer={reviewer} scope={scope:?} defer={defer}");
+            println!(
+                "approve: package={package} reviewer={reviewer} scope={scope:?} defer={defer}"
+            );
         }
         Commands::Merge {
             package,
