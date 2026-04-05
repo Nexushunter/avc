@@ -71,3 +71,7 @@ Primary direction:
 3. Progress toward a CLI model that can eventually replace Git-centric flows.
 
 Detailed milestones and ticketization live under `docs/epics/`.
+
+## License
+
+This project is licensed under the MIT License. See `LICENSE` for details.
